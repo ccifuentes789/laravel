@@ -10,6 +10,19 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::get('itunes', function(){
+   $itunes = new \Itp\Api\ItunesSearch();
+   $json =$itunes->getResults();
+
+   //dd($json);
+    return View::make('itunes', [
+        'songs' => $json->results
+
+        ]);
+
+
+});
+
 
 Route::get('/', function()
 {
@@ -43,14 +56,40 @@ Route::get('/songs/create', function(){
 });
 
 Route::post('songs', function(){
-    $song = new Song();
-    $song->title = Input::get('title');
-    $song->artist_id =Input::get('artist');
-    $song->genre_id = Input::get('genre');
-    $song->price = Input::get('price');
-    $song->save();
+    //dd(Input::all());
+    $validation = Song::validate(Input::all());
+    if($validation->passes()){
+        $song = new Song();
+        $song->title = Input::get('title');
+        $song->artist_id =Input::get('artist');
+        $song->genre_id = Input::get('genre');
+        $song->price = Input::get('price');
+        $song->save();  
+
+        return Redirect::to('songs/create')
+            //->withErrors($validation);
+            ->with('success', 'Yay!');
+    }
+
+    
     return Redirect::to('songs/create')
-        ->with('success', 'Yay!');
+        ->withInput()
+        ->with('errors', $validation->messages());
+});
+
+Route::post('dvds', function(){
+    //dd(Input::all());
+  
+        $dvd = new DVD();
+        $dvd->title = Input::get('title');
+        $dvd->artist_id =Input::get('artist');
+        $dvd->genre_id = Input::get('genre');
+        $dvd->price = Input::get('price');
+        $dvd->save();  
+
+        return Redirect::to('dvds/create')
+            ->with('success', 'Yay!');
+   
 });
 Event::listen('illuminate.query', function($sql){
     echo "<div style='color:red'>$sql </div>";
@@ -89,4 +128,21 @@ Route::get('songs2', function(){
 Route::get('artists/{id}', function($id){
     $artist = Artist::find($id);
     dd($artist->songs->toArray());
+});
+
+Route::get('/dvds/create', function(){
+    $titles = Title::all();
+    $genres = MGenre::all();
+    $sounds = Sound::all();
+    $labels = Label::all();
+    $ratings = Rating::all();
+    $formats = Format::all();
+    return View::make('dvds/create', [
+        'titles'=> $titles,
+        'genres'=>$genres,
+        'sounds'=>$sounds,
+        'labels'=>$labels,
+        'ratings'=>$ratings,
+        'formats'=>$formats
+    ]);
 });

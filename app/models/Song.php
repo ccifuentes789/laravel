@@ -32,4 +32,11 @@ class Song extends Eloquent{
     public function genre(){
         return $this->belongsTo('Genre');
     }
+    public satic function validate($input){
+        return Validator::make(Input::all(), [
+        'title' => 'required|min:4',
+        'price' => 'required|numeric'
+
+        ]);
+    }
 }
