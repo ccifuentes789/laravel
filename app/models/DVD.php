@@ -31,12 +31,12 @@ class DVD{
     }
 }*/
 
-class DVD extends Eloquent{
-    public function title(){
+class Dvd extends Eloquent{
+public function title(){
         return $this->belongsTo('Title');
     }
     public function genre(){
-        return $this->belongsTo('MGenre');
+        return $this->belongsTo('Genre');
     }
     public function sound(){
         return $this->belongsTo('Sound');
@@ -49,6 +49,18 @@ class DVD extends Eloquent{
     }
     public function format(){
         return $this->belongsTo('Format');
+    }
+
+    public static function validate($input){
+        return Validator::make(Input::all(), [
+        'title' => 'required|min:3',
+        'genre' => 'required|numeric',
+        'label' => 'required|numeric',
+        'sound' => 'required|numeric',
+        'rating' => 'required|numeric',
+        'format' => 'required|numeric'
+
+        ]);
     }
     
 }

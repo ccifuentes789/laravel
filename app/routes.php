@@ -77,20 +77,7 @@ Route::post('songs', function(){
         ->with('errors', $validation->messages());
 });
 
-Route::post('dvds', function(){
-    //dd(Input::all());
-  
-        $dvd = new DVD();
-        $dvd->title = Input::get('title');
-        $dvd->artist_id =Input::get('artist');
-        $dvd->genre_id = Input::get('genre');
-        $dvd->price = Input::get('price');
-        $dvd->save();  
 
-        return Redirect::to('dvds/create')
-            ->with('success', 'Yay!');
-   
-});
 Event::listen('illuminate.query', function($sql){
     echo "<div style='color:red'>$sql </div>";
 });
@@ -131,18 +118,44 @@ Route::get('artists/{id}', function($id){
 });
 
 Route::get('/dvds/create', function(){
-    $titles = Title::all();
-    $genres = MGenre::all();
+    //$titles = Title::all();
+    $genres = Genre::all();
     $sounds = Sound::all();
     $labels = Label::all();
     $ratings = Rating::all();
     $formats = Format::all();
     return View::make('dvds/create', [
-        'titles'=> $titles,
+       // 'dvds'=> $titles,
         'genres'=>$genres,
         'sounds'=>$sounds,
         'labels'=>$labels,
         'ratings'=>$ratings,
         'formats'=>$formats
     ]);
+});
+
+Route::post('dvds', function(){
+    //dd(Input::all());
+    $validation = Dvd::validate(Input::all());
+    if($validation->passes()){
+        $dvd = new Dvd();
+        $dvd->title = Input::get('title');
+        $dvd->rating_id =Input::get('rating');
+        $dvd->genre_id = Input::get('genre');
+        $dvd->label_id = Input::get('label');
+        $dvd->sound_id = Input::get('sound');
+        $dvd->format_id = Input::get('format');
+       
+        $dvd->save();  
+         //dd($dvd);
+        
+        
+        return Redirect::to('dvds/create')
+            ->with('success', 'Yay!');
+        }
+
+        return Redirect::to('dvds/create')
+        ->withInput()
+        ->with('errors', $validation->messages());
+        
 });

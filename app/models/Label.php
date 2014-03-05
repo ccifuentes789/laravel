@@ -1,6 +1,6 @@
 <?php
 class Label extends Eloquent{
     public function dvds(){
-        return $this->hasMany('DVD');
+        return $this->hasMany('Dvd');
     }
 }
