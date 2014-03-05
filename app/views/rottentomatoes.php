@@ -1,3 +1,9 @@
+<html>
+<head>
+	<title>Rotten Tomatoes Results</title>
+</head>
+<body>
+<h1> Rotten Tomatoes Results </h1>
 <?php foreach($movies as $movie) :?>
 	<p>
 
@@ -10,11 +16,14 @@
 
 		<b>Runtime: </b>
 		<?php echo $movie->runtime ?> minutes <br />
-<!--
-		<b>Rating: </b>
-		<?php/* echo $movie->ratings->critics_rating */?> <br /> -->
+
+	
 
 
 	</p>
 
 <?php endforeach; ?>
+
+</body>
+
+</html>
