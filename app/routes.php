@@ -22,6 +22,18 @@ Route::get('itunes', function(){
 
 
 });
+Route::get('rottentomatoes', function(){
+   $rottentomatoes = new \Itp\Api\RottenTomatoesSearch();
+   $json =$rottentomatoes->getResults(Input::get('title')); //need to pass title
+
+   //dd($json);
+    return View::make('rottentomatoes', [
+        'movies' => $json->movies
+
+        ]);
+
+
+});
 
 
 Route::get('/', function()
@@ -29,11 +41,18 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
+Route::get('/rottentomatoes/search', function()
+{
+    return View::make('rottentomatoes-search');
+});
+
 Route::get('/songs/search', 'SongController@search');
 Route::get('/songs','SongController@listSongs');
 /**** FOR DVD  ****/
 Route::get('/dvds/search', 'DVDController@search');
 Route::get('/dvds', 'DVDController@listDVDs');
+
+//Route::get('/rottentomatoes/search', 'rottentomatoes-search.php');
 
 /*
 Route::get('create-song', function(){
