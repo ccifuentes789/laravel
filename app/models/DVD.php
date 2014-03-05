@@ -32,9 +32,7 @@ class DVD{
 }*/
 
 class Dvd extends Eloquent{
-public function title(){
-        return $this->belongsTo('Title');
-    }
+
     public function genre(){
         return $this->belongsTo('Genre');
     }
@@ -61,6 +59,16 @@ public function title(){
         'format' => 'required|numeric'
 
         ]);
+    }
+
+    public static function search($dvd_title, $genre, $rating){
+        return Dvd::with('genre', 'sound', 'rating', 'label', 'format')
+        ->where('title', 'LIKE', "%$dvd_title%")
+        //>where('genre', '=', "$genre")
+        //->where('rating', '=', "$rating")
+        ->get();
+
+
     }
     
 }

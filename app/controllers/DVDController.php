@@ -10,7 +10,7 @@ class DVDController extends BaseController{
         $rating = Input::get('rating');
 
         // dd($artist);
-        $dvds = DVD::search($dvd_title, $genre, $rating);
+        $dvds = Dvd::search($dvd_title, $genre, $rating);
         /*
         var_dump($songs);
         die();*/

@@ -21,11 +21,11 @@
         <?php echo "<tr>" ;?>
 
         <?php echo "<td>" . $dvd->title . "</td>" ;?>
-        <?php echo "<td>" . $dvd->rating_name . "</td>"; ?>
-        <?php echo "<td>" . $dvd->genre_name . "</td>"; ?>
-        <?php echo "<td>" . $dvd->label_name . "</td>"; ?>
-        <?php echo "<td>" . $dvd->sound_name . "</td>"; ?>
-        <?php echo "<td>" . $dvd->format_name . "</td>"; ?>
+        <?php echo "<td>" . $dvd->rating->rating_name . "</td>"; ?>
+        <?php echo "<td>" . $dvd->genre->genre_name . "</td>"; ?>
+        <?php echo "<td>" . $dvd->label->label_name . "</td>"; ?>
+        <?php echo "<td>" . $dvd->sound->sound_name . "</td>"; ?>
+        <?php echo "<td>" . $dvd->format->format_name . "</td>"; ?>
         <?php echo "<td>" . $dvd->release_date . "</td>"; ?>
 
         <?php echo "</tr>" ;?>
