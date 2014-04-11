@@ -11,6 +11,7 @@ class RottenTomatoesSearch{
     	$json = file_get_contents($endpoint);
     	
 
+
     	return json_decode($json);
 	}
 }
